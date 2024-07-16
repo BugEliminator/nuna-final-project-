@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch API Example</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="carousel.css">
+  </head>
+  <body>
+    <h1>요리 레시피 제목</h1>
+
+    <!--
+    <div class= recipeBox>
+        <h2>요리 이름: ${recipe.RCP_NM}</h2>
+        ${images.map(img => `<img src="${img}" alt="레시피 이미지">`).join('')}
+        <p>재료: ${recipe.RCP_PARTS_DTLS}</p>
+        <p>만드는 방법</p>
+        <ol>
+          ${cleanedManuals.map(manual => `<li>${manual}</li>`).join('')}
+        </ol>
+        <p>열량: ${recipe.INFO_ENG}kcal</p>         
+        <p>탄수화물: ${recipe.INFO_CAR}g</p>
+        <p>단백질: ${recipe.INFO_PRO}g</p>
+        <p>지방: ${recipe.INFO_FAT}g</p> 
+        <p>나트륨: ${recipe.INFO_NA}g</p> 
+        <p>카테고리: ${recipe.RCP_PAT2}</p>             
+    </div>
+    -->
+
+    <section id="recipe-board"></section>
+    <script src="main.js"></script>
+    <script src="carousel.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
