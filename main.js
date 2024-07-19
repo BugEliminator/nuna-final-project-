@@ -1,114 +1,167 @@
 const API_KEY = '62fc00364bd146588740';
 const serviceId = 'COOKRCP01';
 const dataType = 'json';
-let startIdx = 1;
-let endIdx = 100;
-let url = new URL(
-  `https://openapi.foodsafetykorea.go.kr/api/${API_KEY}/${serviceId}/${dataType}/${startIdx}/${endIdx}`
-);
 
 let recipeList = [];
+let product = [];
+const colors = ["#dc0936", "#e6471d", "#f7a416", "#efe61f", "#60b236", "#209b6c", "#169ed8", "#3f297e", "#87207b", "#be107f", "#e7167b"];
 
-async function getData() {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log('data', data);
-    recipeList = data.COOKRCP01.row; // 레시피 리스트 저장
-    console.log('recipeList', recipeList);
-    render();
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+const $c = document.querySelector("canvas");
+const ctx = $c.getContext('2d');
+
+document.getElementById('btn-banchan').addEventListener('click', (event) => {
+    event.preventDefault();
+    loadRecipes('반찬');
+});
+document.getElementById('btn-dessert').addEventListener('click', (event) => {
+    event.preventDefault();
+    loadRecipes('후식');
+});
+document.getElementById('btn-main').addEventListener('click', (event) => {
+    event.preventDefault();
+    loadRecipes('일품');
+});
+document.getElementById('btn-soup').addEventListener('click', (event) => {
+    event.preventDefault();
+    loadRecipes('국&찌개');
+});
+
+async function loadRecipes(category) {
+    const startIdx = 1;
+    const endIdx = 400;
+    const url = new URL(
+        `https://openapi.foodsafetykorea.go.kr/api/${API_KEY}/${serviceId}/${dataType}/${startIdx}/${endIdx}`
+    );
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        recipeList = data.COOKRCP01.row.filter(recipe => recipe.RCP_PAT2 === category);
+        const selectedRecipes = getRandomRecipes(recipeList, 10);
+        setFoodCategory(selectedRecipes);
+        showRoulette();  // 돌림판과 관련된 요소를 보이게 함
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
 
-const render = () => {
-  let recipeHTML = recipeList.map((recipe, index) => {
-    // 메뉴얼을 배열로 변환하고 빈 메뉴얼을 제거합니다
-    let manuals = Object.keys(recipe)
-      .filter(key => key.startsWith("MANUAL") && !key.includes("IMG")) // "MANUAL"로 시작하지만 "IMG"를 포함하지 않는 키 선택
-      .sort((a, b) => {
-        // 숫자 순서에 따라 정렬
-        const numA = parseInt(a.replace('MANUAL', ''));
-        const numB = parseInt(b.replace('MANUAL', ''));
-        return numA - numB;
-      })
-      .map(key => recipe[key])
-      .filter(manual => manual.trim() !== ""); // 빈 메뉴얼 제거
+function showRoulette() {
+    document.querySelector('.roulette').classList.add('show');
+    document.querySelector('.roulette .triangle').classList.remove('hidden');
+    document.querySelector('.roulette .pointer').classList.remove('hidden');
+    document.querySelector('.roulette .start').classList.remove('hidden');
+}
 
-    // 정규표현식을 사용하여 앞의 번호와 끝의 알파벳 문자를 제거하는 함수
-    const cleanManual = (manual) => manual
-      .replace(/^\d+\.\s*/, '') // 앞의 번호와 점 제거
-      .replace(/[a-zA-Z]$/, ''); // 끝의 알파벳 문자 제거
+function getRandomRecipes(recipes, num) {
+    const shuffled = recipes.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+}
 
-    // 클린된 메뉴얼 리스트 생성
-    let cleanedManuals = manuals.map(cleanManual);
-    console.log(manuals)
-    // 이미지 URL을 가져옵니다 (빈 URL 제거)
-    const images = [
-      recipe.MANUAL_IMG01,
-      recipe.MANUAL_IMG02,
-      recipe.MANUAL_IMG03,
-      recipe.MANUAL_IMG04,
-      recipe.MANUAL_IMG05,
-      recipe.MANUAL_IMG06,
-      recipe.MANUAL_IMG07,
-      recipe.MANUAL_IMG08,
-      recipe.MANUAL_IMG09,
-      recipe.MANUAL_IMG10,
-      recipe.MANUAL_IMG11,
-      recipe.MANUAL_IMG12,
-      recipe.MANUAL_IMG13,
-      recipe.MANUAL_IMG14,
-      recipe.MANUAL_IMG15,
-      recipe.MANUAL_IMG16,
-      recipe.MANUAL_IMG17,
-      recipe.MANUAL_IMG18,
-      recipe.MANUAL_IMG19,
-      recipe.MANUAL_IMG20
-    ].filter(img => img.trim() !== ""); // 빈 이미지 URL 제거
+function setFoodCategory(recipes) {
+    product = recipes.map(recipe => recipe.RCP_NM);
+    newMake();
+}
 
-    return `
+function splitText(text, maxLength) {
+    if (text.length <= maxLength) return [text];
+    const parts = [];
+    for (let i = 0; i < text.length; i += maxLength) {
+        parts.push(text.substring(i, i + maxLength));
+    }
+    return parts;
+}
+
+function newMake() {
+    ctx.clearRect(0, 0, $c.width, $c.height);
+
+    if (product.length === 0) return;
+
+    const [cw, ch] = [$c.width / 2, $c.height / 2];
+    const arc = Math.PI / (product.length / 2);
+
+    for (let i = 0; i < product.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(cw, ch);
+        ctx.arc(cw, ch, cw, arc * i, arc * (i + 1));
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    ctx.fillStyle = "white";
+    ctx.font = "18px Pretendard";
+    ctx.textAlign = "center";
+
+    for (let i = 0; i < product.length; i++) {
+        const angle = (arc * i) + (arc / 2);
+
+        ctx.save();
+        ctx.translate(
+            cw + Math.cos(angle) * (cw - 60),
+            ch + Math.sin(angle) * (ch - 60),
+        );
+        ctx.rotate(angle + Math.PI / 2);
+
+        const textParts = splitText(product[i], 10);
+        textParts.forEach((part, index) => {
+            ctx.fillText(part, 0, index * 20);
+        });
+
+        ctx.restore();
+    }
+}
+
+function rotate() {
+    if (product.length === 0) return;
+    $c.style.transform = 'initial';
+    $c.style.transition = 'initial';
+
+    setTimeout(() => {
+        const ran = Math.floor(Math.random() * product.length);
+        const arc = 360 / product.length;
+        const rotate = (ran * arc) + 3600 + (arc * 3) - (arc / 4);
+
+        $c.style.transform = `rotate(-${rotate}deg)`;
+        $c.style.transition = '2s';
+
+        setTimeout(() => {
+            alert(`오늘의 식사는?! ${product[ran]} 어떠신가요?`);
+            showRecipe(recipeList[ran]); // 당첨된 레시피 정보 표시
+        }, 2000);
+    }, 1);
+}
+function showRecipe(recipe) {
+  // 이미지 URL 배열로 변환 (기본값 빈 배열)
+  const images = [];
+  for (let i = 1; i <= 20; i++) {
+      const imgUrl = recipe[`MANUAL_IMG${String(i).padStart(2, '0')}`];
+      if (imgUrl) images.push(imgUrl);
+  }
+
+  // 만드는 방법을 줄바꿈으로 나누기 (기본값 빈 배열)
+  const manuals = [];
+  for (let i = 1; i <= 20; i++) {
+      const manualText = recipe[`MANUAL${String(i).padStart(2, '0')}`];
+      if (manualText) manuals.push(manualText);
+  }
+
+  const recipeHTML = `
       <div class="recipeBox">
-        <h2>${index}. 요리 이름: ${recipe.RCP_NM}</h2> <!-- 레시피 이름 -->
-        <div class="carousel_main">
-          <div class="carousel_wrapper">
-            ${images.map(img => `<div class="carousel_slide"><img src="${img}" alt="레시피 이미지"></div>`).join('')}
-          </div>
-          <div class="carousel_button_container">
-            <button type="button" class="carousel_prev">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-              </svg>
-            </button>
-            <button type="button" class="carousel_next">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </div>
-          <div class="carousel_pagination">
-            ${images.map((_, index) => `<div class="carousel_circle"></div>`).join('')}
-          </div>
-        </div>
-        <p>재료: ${recipe.RCP_PARTS_DTLS}</p> <!-- 레시피 재료 -->
-        <p>만드는 방법</p>
-        <ol>
-          ${cleanedManuals.map(manual => `<li>${manual}</li>`).join('')} <!-- 레시피 설명 -->
-        </ol>
-        <p>열량: ${recipe.INFO_ENG}kcal</p>         
-        <p>탄수화물: ${recipe.INFO_CAR}g</p>
-        <p>단백질: ${recipe.INFO_PRO}g</p>
-        <p>지방: ${recipe.INFO_FAT}g</p> 
-        <p>나트륨: ${recipe.INFO_NA}g</p> 
-        <p>카테고리: ${recipe.RCP_PAT2}</p>             
+          <h2>요리 이름: ${recipe.RCP_NM || '정보 없음'}</h2>
+          ${images.map(img => `<img src="${img}" alt="레시피 이미지">`).join('')}
+          <p>재료: ${recipe.RCP_PARTS_DTLS || '정보 없음'}</p>
+          <p>만드는 방법</p>
+          <ol>
+              ${manuals.map(manual => `<li>${manual}</li>`).join('')}
+          </ol>
+          <p>열량: ${recipe.INFO_ENG || '정보 없음'}kcal</p>
+          <p>탄수화물: ${recipe.INFO_CAR || '정보 없음'}g</p>
+          <p>단백질: ${recipe.INFO_PRO || '정보 없음'}g</p>
+          <p>지방: ${recipe.INFO_FAT || '정보 없음'}g</p>
+          <p>나트륨: ${recipe.INFO_NA || '정보 없음'}g</p>
+          <p>카테고리: ${recipe.RCP_PAT2 || '정보 없음'}</p>
       </div>
-    `;
-  }).join(''); // .join('')을 추가하여 배열을 하나의 문자열로 병합
-  document.getElementById('recipe-board').innerHTML = recipeHTML;
-  initializeCarousel(); // 캐러셀 초기화 함수 호출
-};
+  `;
 
-getData();
+  document.getElementById('recipe-board').innerHTML = recipeHTML;
+}

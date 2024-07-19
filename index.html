@@ -9,7 +9,23 @@
     <link rel="stylesheet" href="carousel.css">
   </head>
   <body>
-    <h1>요리 레시피 제목</h1>
+    <h1>Random Food</h1>
+    <p>고민이 어려운 당신에게 레시피를 추천해드릴께요.</p>
+    <div class="rouletteContainer">
+      <div class="choiceFoodBtn">
+        <a class="btn green rounded" id="btn-banchan">반찬</a>
+        <a class="btn blue rounded" id="btn-dessert">후식</a>
+        <a class="btn red rounded" id="btn-main">일품</a>
+        <a class="btn purple rounded" id="btn-soup">국&찌개</a>
+      </div>
+  
+      <div class="roulette hidden">
+        <div class="triangle hidden"></div> 
+        <canvas width="650" height='650'></canvas>  
+        <a class="btn yellow rounded start hidden" onclick="rotate()">시작하기</a>
+        <div class="pointer hidden"></div>
+      </div>
+    </div>
 
     <!--
     <div class= recipeBox>
@@ -28,6 +44,8 @@
         <p>카테고리: ${recipe.RCP_PAT2}</p>             
     </div>
     -->
+
+  
 
     <section id="recipe-board"></section>
     <script src="main.js"></script>

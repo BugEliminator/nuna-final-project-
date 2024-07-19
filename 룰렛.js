@@ -4,7 +4,7 @@ const ctx = $c.getContext(`2d`);
 
 // 음식 항목과 색상 배열
 const product = [
-  "떡볶이", '돈가스', "초밥", "피자", "냉면", "치킨", '족발', "피자", "삼겹살",
+  "떡볶이", '돈가스', "초밥", "피자", "냉면", "치킨", '족발', "피자", "삼겹살"
 ];
 
 const colors = ["#dc0936", "#e6471d", "#f7a416", "#efe61f ", "#60b236", "#209b6c", "#169ed8", "#3f297e", "#87207b", "#be107f", "#e7167b"];
@@ -30,7 +30,7 @@ const newMake = () => {
 
     // 텍스트 스타일 설정
     ctx.fillStyle = "#fff";
-    ctx.font = "18px Pretendard";
+    ctx.font = "16px Noto Sans KR";
     ctx.textAlign = "center";
 
     // 각 섹션의 중앙에 텍스트 배치
