@@ -1,5 +1,3 @@
-<!-----웹페이지 메인화면------>
-
 <!DOCTYPE html>
 <html lang="kr">
   <head>
@@ -16,12 +14,12 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="include/css/header.css" />
-    <link rel="stylesheet" href="css/common.css" />
-    <link rel="stylesheet" href="./kang/diet.css" />
+    <link rel="stylesheet" href="../include/css/header.css" />
+    <link rel="stylesheet" href="diet.css" />
   </head>
+
   <body>
-    <div id="init">
+    <div class="init">
       <header></header>
       <!-- header 및 footer 는 화면 로드 시 자동으로 내용으로 로드됩니다. -->
 
@@ -66,7 +64,7 @@
                   onclick="showDetail(0, 'billboard')"
                 >
                   <img
-                    src="./kang/images/billboard1.jpg"
+                    src="./images/billboard1.jpg"
                     class="d-block w-100"
                     alt=""
                   />
@@ -80,7 +78,7 @@
                   onclick="showDetail(1, 'billboard')"
                 >
                   <img
-                    src="./kang/images/billboard2.jpg"
+                    src="./images/billboard2.jpg"
                     class="d-block w-100"
                     alt=""
                   />
@@ -94,7 +92,7 @@
                   onclick="showDetail(2, 'billboard')"
                 >
                   <img
-                    src="./kang/images/billboard3.jpg"
+                    src="./images/billboard3.jpg"
                     class="d-block w-100"
                     alt=""
                   />
@@ -180,12 +178,8 @@
           </div>
         </div>
       </main>
-      <!-- /main 작성-->
-
-      <!-- header 및 footer 는 화면 로드 시 자동으로 내용으로 로드됩니다. -->
       <footer></footer>
     </div>
-
     <!-- jQuery 먼저 로드 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Bootstrap JS 로드 -->
@@ -197,7 +191,7 @@
     <!-- FontAwesome 로드 -->
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <!-- 커스텀 JS 로드 -->
-    <script src="./kang/diet.js"></script>
+    <script src="yoon.js"></script>
     <script>
       $(document).ready(function () {
         $('header').load('../include/header.html');

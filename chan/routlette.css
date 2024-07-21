@@ -1,18 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
 
 * {
-  font-family: "Noto Sans KR", "Noto Sans", sans-serif;
+  font-family: 'Noto Serif KR', serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+img {
+  width: 400px;
+}
+
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
   background-color: #f4f4f4;
   text-align: center;
@@ -24,6 +25,32 @@ h1 {
 
 p {
   margin-bottom: 20px;
+}
+
+.mainTop {
+  color: rgb(147, 112, 98);
+}
+
+.mainTop h1 {
+  font-family: 'Noto Serif KR', serif, Helvetica, 'Helvetica Neue', Arial;
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 2px;
+  font-weight: 1000;
+}
+
+.mainTop p {
+  font-weight: normal;
+  font-family: 'Noto Serif KR', serif, Helvetica, 'Helvetica Neue', Arial;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  letter-spacing: 0px;
+  text-align: center;
+  font-weight: 500;
 }
 
 .choiceFoodBtn {
@@ -98,86 +125,93 @@ canvas {
   display: block;
 }
 
-
-.btn {
+.button {
   border: 0;
-  padding: 15px 25px;
-  margin: 5px;
+  padding: 10px 25px;
+  margin: 10px;
   display: inline-block;
   text-align: center;
+  text-decoration: none;
   color: white;
   transition: 0.2s;
   cursor: pointer;
   border-radius: 10px;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.btn:active {
-  top: 4px;
-}
-
-.btn.green {
+.button.green {
   background-color: #9abf7f;
-  box-shadow: 0px 4px 0px #87a86f;
+  box-shadow: 0px 4px #87a86f;
 }
 
-.btn.green:active {
-  box-shadow: 0 0 #87a86f;
-  background-color: #87a86f;
+.button.green:active {
+  box-shadow: 0px 2px 0px #6f8a5f;
+  background-color: #6f8a5f;
+  transform: translateY(2px);
 }
 
-.btn.blue {
+.button.blue {
   background-color: #7fb1bf;
   box-shadow: 0px 4px #74a3b0;
 }
 
-.btn.blue:active {
-  box-shadow: 0 0 #74a3b0;
-  background-color: #709CA8;
+.button.blue:active {
+  box-shadow: 0px 2px #60909b;
+  background-color: #60909b;
+  transform: translateY(2px);
 }
 
-.btn.red {
+.button.red {
   background-color: #fa5a5a;
-  box-shadow: 0px 4px 0px #E04342;
+  box-shadow: 0px 4px 0px #e04342;
 }
 
-.btn.red:active {
-  box-shadow: 0 0 #ff4c4b;
-  background-color: #ff4c4b;
+.button.red:active {
+  box-shadow: 0px 2px 0px #c63636;
+  background-color: #c63636;
+  transform: translateY(2px);
 }
 
-.btn.purple {
+.button.purple {
   background-color: #cb99c5;
-  box-shadow: 0px 4px 0px #AD83A8;
+  box-shadow: 0px 4px 0px #ad83a8;
 }
 
-.btn.purple:active {
-  box-shadow: 0 0 #BA8CB5;
-  background-color: #BA8CB5;
+.button.purple:active {
+  box-shadow: 0px 2px 0px #966a88;
+  background-color: #966a88;
+  transform: translateY(2px);
 }
 
-.btn.cyan {
+.button.cyan {
   background-color: #7fccde;
-  box-shadow: 0px 4px 0px #73B9C9;
+  box-shadow: 0px 4px 0px #73b9c9;
 }
 
-.btn.cyan:active {
-  box-shadow: 0 0 #73B9C9;
-  background-color: #70B4C4;
+.button.cyan:active {
+  box-shadow: 0px 2px 0px #639ea6;
+  background-color: #639ea6;
+  transform: translateY(2px);
 }
 
-.btn.yellow {
+.button.yellow {
   background-color: #f0d264;
-  box-shadow: 0px 4px 0px #D1B757;
+  box-shadow: 0px 4px 0px #d1b757;
 }
 
-.btn.yellow:active {
-  box-shadow: 0 0 #ff4c4b;
-  background-color: #D6BB59;
+.button.yellow:active {
+  box-shadow: 0px 2px 0px #b19a4b;
+  background-color: #b19a4b;
+  transform: translateY(2px);
+}
+
+.startBtn {
+  width: 200px;
+  margin-bottom: 400px;
 }
 
 /* 레시피 박스의 스타일을 정의합니다. */
 .recipeBox {
-  max-width: 800px;
   margin: 20px auto; /* 수평 가운데 정렬 */
   padding: 20px;
   border: 1px solid #ddd;
@@ -203,7 +237,7 @@ canvas {
 }
 
 /* 목록 스타일을 정의합니다. */
-.recipeBox ol {
+.recipeBox {
   margin: 10px 0;
   padding-left: 20px;
 }
@@ -214,28 +248,52 @@ canvas {
   color: #555;
   line-height: 1.6;
 }
+/* 기본 스타일 적용 */
+body {
+  font-family: 'Noto Serif KR', serif;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  text-align: center;
+}
 
+/* 미디어 쿼리 */
+@media (max-width: 1200px) {
+  /* 태블릿 스타일 */
+  .choiceFoodBtn {
+    flex-direction: row;
+    justify-content: space-around;
+  }
 
+  .rouletteContainer {
+    padding: 50px;
+  }
 
-/* Media Queries */
+  .roulette {
+    width: 500px;
+    height: 500px;
+  }
+
+  .btn {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+}
+
 @media (max-width: 768px) {
+  /* 모바일 스타일 */
   .choiceFoodBtn {
     width: 100%;
     flex-direction: column;
   }
 
   .rouletteContainer {
-    width: 90%;
-    height: auto;
+    padding: 20px;
   }
 
   .roulette {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    width: 300px;
+    height: 300px;
   }
-
 
   .btn {
     margin: 5px 0;
@@ -245,15 +303,14 @@ canvas {
 }
 
 @media (max-width: 480px) {
+  /* 작은 모바일 스타일 */
   .rouletteContainer {
     padding: 10px;
   }
 
   .roulette {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    width: 200px;
+    height: 200px;
   }
 
   .btn {
@@ -261,4 +318,31 @@ canvas {
     padding: 8px 16px;
     font-size: 12px;
   }
+}
+
+/* 추가적인 스타일 */
+.choiceFoodBtn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.rouletteContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.roulette {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  height: 650px;
+  padding-bottom: 100%; /* 1:1 비율을 유지하기 위해 padding-bottom을 100%로 설정 */
 }
